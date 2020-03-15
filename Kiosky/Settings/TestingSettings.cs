@@ -11,6 +11,8 @@ namespace Kiosky.Settings
     /// </summary>
     public class TestingSettings
     {
+        private const string defaultTitle = "Default";
+
         /// <summary>
         /// Get settings that will lock down the browser to a single site
         /// </summary>
@@ -20,10 +22,24 @@ namespace Kiosky.Settings
         {
             Settings s = new Settings();
             s.StartURL = "github.com";
-            s.Title = "Default";
+            s.Title = defaultTitle;
             s.PopupWhenDomainBlocked = true;
             s.AllowedDomains = new string[] { "github.com" };
             s.AllowAllSubframeDomains = AllowSubframe;
+            return s;
+        }
+
+        /// <summary>
+        /// Settings that are used for a cycling kiosk style browser such as for digital signage or a dashboard
+        /// </summary>
+        /// <returns>Settings configured to cycle through three sites every 5 seconds</returns>
+        public static Settings GetDefaultCycleSettings()
+        {
+            Settings s = new Settings();
+            s.Title = defaultTitle;
+            s.PopupWhenDomainBlocked = false;
+            s.CycleTime = 5;
+            s.CycleURLs = new string[] { "github.com", "microsoft.com", "https://www.google.com/chrome/" };
             return s;
         }
     }
