@@ -1,2 +1,2 @@
-# kiosk-browser
+# Kiosky
 A kiosk/restricted browser for Windows.
