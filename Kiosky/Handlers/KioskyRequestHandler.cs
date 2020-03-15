@@ -1,0 +1,96 @@
+﻿using CefSharp;
+using CefSharp.Handler;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Kiosky.Handlers
+{
+    class KioskyRequestHandler : RequestHandler
+
+    {
+        List<String> _allowedHosts;
+        public KioskyRequestHandler (string[] AllowedHosts)
+        {
+            _allowedHosts = new List<string>(AllowedHosts);
+
+        }
+        protected override bool GetAuthCredentials(IWebBrowser chromiumWebBrowser, IBrowser browser, string originUrl, bool isProxy, string host, int port, string realm, string scheme, IAuthCallback callback)
+        {
+            return false;
+        }
+
+        protected override IResourceRequestHandler GetResourceRequestHandler(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request, bool isNavigation, bool isDownload, string requestInitiator, ref bool disableDefaultHandling)
+        {
+            if(request.TransitionType.HasFlag( TransitionType.ForwardBack))
+            {
+                browser.StopLoad();
+                return new BlockBrowseRequestHandler();
+            }
+            else
+            {
+                return base.GetResourceRequestHandler(chromiumWebBrowser, browser, frame, request, isNavigation, isDownload, requestInitiator, ref disableDefaultHandling);
+            }
+            
+        }
+
+        protected override bool OnBeforeBrowse(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request, bool userGesture, bool isRedirect)
+        {
+            Uri uri = new Uri(request.Url);
+
+
+            if(uri != null && _allowedHosts.Contains(uri.Host)) {
+                
+
+                return false;
+            }
+            else
+            {
+                
+                Dialogs.InvalidHostBrowseDialog dialog = new Dialogs.InvalidHostBrowseDialog(uri.Host);
+                
+                dialog.ShowDialog();
+                return true;
+            }
+            
+        }
+
+        protected override bool OnCertificateError(IWebBrowser chromiumWebBrowser, IBrowser browser, CefErrorCode errorCode, string requestUrl, ISslInfo sslInfo, IRequestCallback callback)
+        {
+            return true;
+        }
+
+        protected override bool OnOpenUrlFromTab(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, string targetUrl, WindowOpenDisposition targetDisposition, bool userGesture)
+        {
+            return true;
+        }
+
+        protected override void OnPluginCrashed(IWebBrowser chromiumWebBrowser, IBrowser browser, string pluginPath)
+        {
+            
+        }
+
+        protected override bool OnQuotaRequest(IWebBrowser chromiumWebBrowser, IBrowser browser, string originUrl, long newSize, IRequestCallback callback)
+        {
+            return true;
+        }
+
+        protected override void OnRenderProcessTerminated(IWebBrowser chromiumWebBrowser, IBrowser browser, CefTerminationStatus status)
+        {
+            
+        }
+
+        protected override void OnRenderViewReady(IWebBrowser chromiumWebBrowser, IBrowser browser)
+        {
+            
+        }
+
+        protected override bool OnSelectClientCertificate(IWebBrowser chromiumWebBrowser, IBrowser browser, bool isProxy, string host, int port, X509Certificate2Collection certificates, ISelectClientCertificateCallback callback)
+        {
+            return true;
+        }
+    }
+}

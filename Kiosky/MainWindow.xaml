@@ -1,0 +1,20 @@
+﻿<Window x:Class="Kiosky.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
+        xmlns:local="clr-namespace:Kiosky"
+        mc:Ignorable="d"
+        Title="Kiosk" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    <Grid>
+        <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1">
+            <wpf:ChromiumWebBrowser x:Name="Browser" Address="about:blank" ContextMenuOpening="Browser_ContextMenuOpening" FrameLoadStart="Browser_FrameLoadStart" PreviewKeyDown="Browser_PreviewKeyDown" >
+                <wpf:ChromiumWebBrowser.ContextMenu>  
+                    <ContextMenu/>
+                </wpf:ChromiumWebBrowser.ContextMenu>
+            </wpf:ChromiumWebBrowser>
+        </Border>
+
+    </Grid>
+</Window>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Blend for Visual Studio Version 16
+VisualStudioVersion = 16.0.29905.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kiosky", "Kiosky\Kiosky.csproj", "{CDCDC520-3FB1-4780-BAB7-0E9929F4279B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CDCDC520-3FB1-4780-BAB7-0E9929F4279B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDCDC520-3FB1-4780-BAB7-0E9929F4279B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDCDC520-3FB1-4780-BAB7-0E9929F4279B}.Debug|x64.ActiveCfg = Debug|x64
+		{CDCDC520-3FB1-4780-BAB7-0E9929F4279B}.Debug|x64.Build.0 = Debug|x64
+		{CDCDC520-3FB1-4780-BAB7-0E9929F4279B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDCDC520-3FB1-4780-BAB7-0E9929F4279B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDCDC520-3FB1-4780-BAB7-0E9929F4279B}.Release|x64.ActiveCfg = Release|x64
+		{CDCDC520-3FB1-4780-BAB7-0E9929F4279B}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C1C54D01-C77E-4ABC-8701-C29DCB569796}
+	EndGlobalSection
+EndGlobal
