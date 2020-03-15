@@ -3,3 +3,6 @@ bin
 MigrationBackup
 packages.config
 obj
+Help/LastBuild.log
+Help
+KioskBrowserHelp.shfbproj

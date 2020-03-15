@@ -13,9 +13,13 @@ namespace Kiosky.Handlers
 
     {
         List<String> _allowedHosts;
-        public KioskyRequestHandler (string[] AllowedHosts)
+        Boolean _allowSubframeNavigation;
+        Boolean _showDialogWhenBlocked;
+        public KioskyRequestHandler (Settings.Settings settings)
         {
-            _allowedHosts = new List<string>(AllowedHosts);
+            _allowedHosts = new List<string>(settings.AllowedDomains);
+            _allowSubframeNavigation = settings.AllowAllSubframeDomains;
+            _showDialogWhenBlocked = settings.PopupWhenDomainBlocked;
 
         }
         protected override bool GetAuthCredentials(IWebBrowser chromiumWebBrowser, IBrowser browser, string originUrl, bool isProxy, string host, int port, string realm, string scheme, IAuthCallback callback)
@@ -25,6 +29,7 @@ namespace Kiosky.Handlers
 
         protected override IResourceRequestHandler GetResourceRequestHandler(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request, bool isNavigation, bool isDownload, string requestInitiator, ref bool disableDefaultHandling)
         {
+            //Disable forward and back
             if(request.TransitionType.HasFlag( TransitionType.ForwardBack))
             {
                 browser.StopLoad();
@@ -41,18 +46,22 @@ namespace Kiosky.Handlers
         {
             Uri uri = new Uri(request.Url);
 
-
-            if(uri != null && _allowedHosts.Contains(uri.Host)) {
+            // If the allowed hosts list isn't empty, or if the host is an allowed host or if we allow all SubFrame navigation and this is a subframe navigation allow us to browse
+            if(_allowedHosts.Count > 0 && ((uri != null && _allowedHosts.Contains(uri.Host)) || ((!_allowSubframeNavigation) && request.TransitionType.HasFlag(TransitionType.AutoSubFrame)))) {
                 
 
                 return false;
             }
             else
             {
+                //Popup a dialog to let the user know this isn't allowed
+                if(_showDialogWhenBlocked)
+                {
+                    frame.EvaluateScriptAsync(String.Format("alert('{0} is not an allowed url')", uri.Host));
+                }
                 
-                Dialogs.InvalidHostBrowseDialog dialog = new Dialogs.InvalidHostBrowseDialog(uri.Host);
-                
-                dialog.ShowDialog();
+
+                //Block the request
                 return true;
             }
             

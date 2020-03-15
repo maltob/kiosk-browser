@@ -8,8 +8,7 @@ using YamlDotNet.Serialization;
 namespace Kiosky.Settings
 {
     class YAMLSettings
-    {
-       
+    {       
         
         public static Settings FromFile(string path)
         {

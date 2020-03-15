@@ -19,6 +19,9 @@ namespace Kiosky.Dialogs
     /// </summary>
     public partial class Configuration : Window
     {
+        /// <summary>
+        /// Create a dialog window to allow for modifying the Kiosk Browsers configuration
+        /// </summary>
         public Configuration()
         {
             InitializeComponent(); 

@@ -19,10 +19,15 @@ namespace Kiosky.Dialogs
     /// </summary>
     public partial class InvalidHostBrowseDialog : Window
     {
+        /// <summary>
+        /// An XAML dialog box to display a message when the user browses to a not allowed domain
+        /// 
+        /// </summary>
+        /// <param name="Host">The not allowed domain that as browsed to such as badwebsite.co.uk</param>
         public InvalidHostBrowseDialog(string Host)
         {
             InitializeComponent();
-            this.HostMessageTextBlock.Text = "You attempted to browse to an invalid host : "+Host;
+            this.HostMessageTextBlock.Text = String.Format("You attempted to browse to an invalid host : {0}", Host);
         }
 
         private void Window_LostFocus(object sender, RoutedEventArgs e)

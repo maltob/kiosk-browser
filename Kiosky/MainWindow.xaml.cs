@@ -20,14 +20,21 @@ namespace Kiosky
     /// </summary>
     public partial class MainWindow : Window
     {
+        Settings.Settings _browserSettings;
+        /// <summary>
+        /// The primary application window, called by the App
+        /// </summary>
         public MainWindow()
         {
 
 
 
             InitializeComponent();
-            Browser.RequestHandler = new Handlers.KioskyRequestHandler(new string[]{ ""});
-            ConfigureBrowserSettings();
+            _browserSettings = Settings.TestingSettings.GetDefaultLockdownSettings();
+            Browser.RequestHandler = new Handlers.KioskyRequestHandler(_browserSettings);
+            ConfigureBrowserSettings(_browserSettings);
+           
+            this.Visibility = Visibility.Visible;
 
         }
         private void Browser_ContextMenuOpening(object sender, ContextMenuEventArgs e)
@@ -47,18 +54,28 @@ namespace Kiosky
             }
         }
 
-        private void Browser_FrameLoadStart(object sender, CefSharp.FrameLoadStartEventArgs e)
-        {
-            e.Frame.ExecuteJavaScriptAsync("window.print=function(){}");
-        }
-
-        private void ConfigureBrowserSettings()
+      
+        /// <summary>
+        /// Sets the embedded browser up for use
+        /// </summary>
+        /// <param name="browserSettings">Settings to use to configure the browser</param>
+        private void ConfigureBrowserSettings(Settings.Settings browserSettings)
         {
             this.Browser.BrowserSettings.Databases = CefSharp.CefState.Disabled;
             this.Browser.BrowserSettings.JavascriptAccessClipboard = CefSharp.CefState.Disabled;
             this.Browser.BrowserSettings.JavascriptDomPaste = CefSharp.CefState.Disabled;
             this.Browser.BrowserSettings.Plugins = CefSharp.CefState.Disabled;
             this.Browser.BrowserSettings.WebSecurity = CefSharp.CefState.Enabled;
+
+            if(browserSettings.StartURL != null)
+            {
+                this.Browser.Address = browserSettings.StartURL;
+            }
+        }
+
+        private void Browser_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Visibility = Visibility.Visible;
         }
     }
 }
