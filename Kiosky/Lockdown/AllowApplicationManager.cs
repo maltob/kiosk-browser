@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Kiosky.Lockdown
 {
-    class BlacklistApplicationManager : IApplicationManager
+    class AllowApplicationManager : IApplicationManager
     {
         public void LoadPrograms(string[] programs)
         {
 
         }
 
-        ~BlacklistApplicationManager()
+        ~AllowApplicationManager()
         {
 
         }

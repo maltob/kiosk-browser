@@ -54,5 +54,11 @@ namespace Kiosky.Settings
         /// <summary> Whether we should use GPO to block taskmanager </summary>
         [DefaultValue(false)]
         public bool BlockTaskManager { get; set; } = false;
+
+        /// <summary>
+        /// Try to block window switching Ex: Alt+Tab
+        /// </summary>
+        [DefaultValue(true)]
+        public bool BlockWindowSwitching { get; set; } = true;
     }
 }

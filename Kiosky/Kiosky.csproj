@@ -63,6 +63,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -82,9 +83,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Lockdown\DenyApplicationManager.cs" />
     <Compile Include="Lockdown\Support\GPOSettings.cs" />
     <Compile Include="Lockdown\Support\KeyboardHook.cs" />
     <Compile Include="Logger\DefaultLogger.cs" />
+    <Compile Include="Settings\KioskSettings.cs" />
     <Compile Include="Settings\Settings.cs" />
     <Compile Include="Settings\TestingSettings.cs" />
     <Compile Include="Settings\YAMLSettings.cs" />
@@ -113,7 +116,7 @@
     <Compile Include="Handlers\BlockBrowseRequestHandler.cs" />
     <Compile Include="Handlers\KioskyRequestHandler.cs" />
     <Compile Include="Lockdown\ApplicationManager.cs" />
-    <Compile Include="Lockdown\BlacklistApplicationManager.cs" />
+    <Compile Include="Lockdown\AllowApplicationManager.cs" />
     <Compile Include="Lockdown\WindowsLockdown.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -149,6 +152,9 @@
   <ItemGroup>
     <PackageReference Include="CefSharp.Wpf">
       <Version>79.1.360</Version>
+    </PackageReference>
+    <PackageReference Include="CommandLineParser">
+      <Version>2.7.82</Version>
     </PackageReference>
     <PackageReference Include="Serilog">
       <Version>2.9.0</Version>

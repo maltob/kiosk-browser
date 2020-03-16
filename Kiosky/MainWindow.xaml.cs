@@ -31,15 +31,22 @@ namespace Kiosky
 
 
             InitializeComponent();
-            _browserSettings = Settings.TestingSettings.GetDefaultLockdownSettings();
+
+            //Confgure the browser
+            _browserSettings = Settings.KioskSettings.GetSettings();
             Browser.RequestHandler = new Handlers.KioskyRequestHandler(_browserSettings);
             ConfigureBrowserSettings(_browserSettings);
-           
-            this.Visibility = Visibility.Visible;
+            _lockdown = new Lockdown.WindowsLockdown(DisableTaskManager: _browserSettings.BlockTaskManager, DisableAltTab: _browserSettings.BlockWindowSwitching);
 
-            _lockdown = new Lockdown.WindowsLockdown();
+            
             
 
+            //Show the browser
+            this.Visibility = Visibility.Visible;
+           
+            
+            
+            
         }
         private void Browser_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
@@ -51,10 +58,14 @@ namespace Kiosky
         private void Browser_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             // If they hit pause, show the Configuration dialog
-            if(e.Key == Key.Pause)
+            if (e.Key == Key.Pause)
             {
                 Dialogs.Configuration configurationDialog = new Dialogs.Configuration();
                 configurationDialog.ShowDialog();
+            }
+            else if (e.Key == Key.Escape)
+            {
+                this.Close();
             }
         }
 
@@ -81,5 +92,7 @@ namespace Kiosky
         {
             this.Visibility = Visibility.Visible;
         }
+
+        
     }
 }

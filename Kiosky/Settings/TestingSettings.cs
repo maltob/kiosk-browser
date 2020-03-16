@@ -25,6 +25,7 @@ namespace Kiosky.Settings
             s.Title = defaultTitle;
             s.PopupWhenDomainBlocked = true;
             s.AllowedDomains = new string[] { "github.com" };
+            s.AllowedPrograms = new string[] { "chrome.exe","Blend.exe"};
             s.AllowAllSubframeDomains = AllowSubframe;
             return s;
         }
