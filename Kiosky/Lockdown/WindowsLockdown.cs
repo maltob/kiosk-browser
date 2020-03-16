@@ -8,9 +8,30 @@ namespace Kiosky.Lockdown
 {
     class WindowsLockdown
     {
+        Support.KeyboardHook kbd;
+        Support.GPOSettings gpos;
+        public WindowsLockdown(bool DisableTaskManager = true, bool DisableAltTab=true)
+        {
+
+            //If we want Alt Tab disabled, setup the hook to do so
+            if(DisableAltTab)
+            {
+                kbd = new Support.KeyboardHook();
+                kbd.SetHook();
+            }
+
+            if(DisableTaskManager)
+            {
+                gpos = new Support.GPOSettings();
+                gpos.DisableTaskMgr = true;
+            }
+            
+        }
         ~WindowsLockdown()
         {
-            // Unset everything
+            if(kbd != null)
+                kbd.Dispose();
+
         }
     }
 }

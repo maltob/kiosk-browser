@@ -21,6 +21,7 @@ namespace Kiosky
     public partial class MainWindow : Window
     {
         Settings.Settings _browserSettings;
+        Lockdown.WindowsLockdown _lockdown;
         /// <summary>
         /// The primary application window, called by the App
         /// </summary>
@@ -35,6 +36,9 @@ namespace Kiosky
             ConfigureBrowserSettings(_browserSettings);
            
             this.Visibility = Visibility.Visible;
+
+            _lockdown = new Lockdown.WindowsLockdown();
+            
 
         }
         private void Browser_ContextMenuOpening(object sender, ContextMenuEventArgs e)
