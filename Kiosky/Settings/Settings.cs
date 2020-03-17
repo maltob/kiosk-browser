@@ -47,7 +47,7 @@ namespace Kiosky.Settings
         [DefaultValue(true)]
         public bool AllowAllSubframeDomains { get; set; } = true;
 
-        /// <summary> Whether to display a popup when a page is blocked, or just islently fail. </summary>
+        /// <summary> Whether to display a popup when a page is blocked, or just silently fail. </summary>
         [DefaultValue(true)]
         public bool PopupWhenDomainBlocked { get; set; } = true;
 
@@ -60,5 +60,12 @@ namespace Kiosky.Settings
         /// </summary>
         [DefaultValue(true)]
         public bool BlockWindowSwitching { get; set; } = true;
+
+        /// <summary>
+        /// The password hash for admin
+        /// </summary>
+        public string AdminPasswordHash { get; set; }
+
+
     }
 }

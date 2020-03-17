@@ -83,6 +83,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Dialogs\BlankWindow.xaml.cs">
+      <DependentUpon>BlankWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\CloseDialog.xaml.cs">
+      <DependentUpon>CloseDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Lockdown\DenyApplicationManager.cs" />
     <Compile Include="Lockdown\Support\GPOSettings.cs" />
     <Compile Include="Lockdown\Support\KeyboardHook.cs" />
@@ -91,6 +97,14 @@
     <Compile Include="Settings\Settings.cs" />
     <Compile Include="Settings\TestingSettings.cs" />
     <Compile Include="Settings\YAMLSettings.cs" />
+    <Page Include="Dialogs\BlankWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\CloseDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\Configuration.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -155,6 +169,9 @@
     </PackageReference>
     <PackageReference Include="CommandLineParser">
       <Version>2.7.82</Version>
+    </PackageReference>
+    <PackageReference Include="Konscious.Security.Cryptography.Argon2">
+      <Version>1.2.1</Version>
     </PackageReference>
     <PackageReference Include="Serilog">
       <Version>2.9.0</Version>

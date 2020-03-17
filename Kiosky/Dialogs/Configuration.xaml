@@ -5,8 +5,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Kiosky.Dialogs"
         mc:Ignorable="d"
-        Title="Configuration" Height="450" Width="800" Topmost="True" LostFocus="Window_LostFocus">
+        Title="Configuration" Height="500" Width="500" Topmost="True" LostFocus="Window_LostFocus">
     <Grid>
-        
+        <PasswordBox HorizontalAlignment="Left" Margin="139.673,18,0,0" VerticalAlignment="Top" Width="318"/>
+        <Label Content="Admin Password" HorizontalAlignment="Left" Margin="26,10,0,0" VerticalAlignment="Top"/>
+
+
+        <TabControl HorizontalAlignment="Left" Height="290" Margin="5.327,46,0,0" VerticalAlignment="Top" Width="476.673">
+            <TabItem Header="URL">
+                <Grid Background="#FFE5E5E5" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24*"/>
+                        <ColumnDefinition Width="133*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox HorizontalAlignment="Left" Height="144" Margin="55,84.05,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="387" Grid.ColumnSpan="2"/>
+                    <Label Content="URLs to open" HorizontalAlignment="Left" Height="34" Margin="10,50.05,0,0" VerticalAlignment="Top" Width="85" FontWeight="Bold" Grid.ColumnSpan="2"/>
+                    <Label Content="Seconds Between URL" HorizontalAlignment="Left" Height="24.05" Margin="34.673,10,0,0" VerticalAlignment="Top" Width="140.277" Grid.ColumnSpan="2"/>
+                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="24.05" Margin="128.723,10,0,0" TextWrapping="Wrap" Text="60" VerticalAlignment="Top" Width="79"/>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Domains">
+                <Grid Background="#FFE5E5E5">
+                    <Label Content="Allowed Domains" HorizontalAlignment="Left" Height="34" Margin="10,10,0,0" VerticalAlignment="Top" Width="127" FontWeight="Bold"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Lockdown" HorizontalAlignment="Right" Height="19.96" VerticalAlignment="Top" Width="53.973" Margin="-2,-2,2,0">
+                <Grid Background="#FFE5E5E5">
+                    <CheckBox Content="Disable Window Switching (Alt+Tab)" HorizontalAlignment="Left" Margin="122.277,10,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Program List" HorizontalAlignment="Left" Height="27" Margin="10,48.04,0,0" VerticalAlignment="Top" Width="117.673"/>
+                    <RadioButton Content="Block" HorizontalAlignment="Left" Height="18" Margin="139.673,57.04,0,0" VerticalAlignment="Top" Width="100" GroupName="ProgramListType" IsChecked="True"/>
+                    <RadioButton Content="Allow" HorizontalAlignment="Left" Height="18" Margin="257.673,57.04,0,0" VerticalAlignment="Top" Width="100" GroupName="ProgramListType"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Button Content="Cancel" HorizontalAlignment="Left" Height="33" Margin="386,359,0,0" VerticalAlignment="Top" Width="96" Background="#FFFFAFAF"/>
+        <Button Content="Save" HorizontalAlignment="Left" Height="33" Margin="10,359,0,0" VerticalAlignment="Top" Width="96"/>
+        <TextBox HorizontalAlignment="Left" Height="144" Margin="56,147.05,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="387"/>
     </Grid>
 </Window>

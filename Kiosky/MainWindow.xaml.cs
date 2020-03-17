@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -22,6 +23,7 @@ namespace Kiosky
     {
         Settings.Settings _browserSettings;
         Lockdown.WindowsLockdown _lockdown;
+        List<Dialogs.BlankWindow> _blankWindows = new List<Dialogs.BlankWindow>();
         /// <summary>
         /// The primary application window, called by the App
         /// </summary>
@@ -44,7 +46,16 @@ namespace Kiosky
             //Show the browser
             this.Visibility = Visibility.Visible;
            
-            
+            //Cover over non primary screens
+            foreach(Screen s in Screen.AllScreens)
+            {
+                if(!s.Primary)
+                {
+                    var bw = new Dialogs.BlankWindow(s);
+                    bw.Show();
+                    _blankWindows.Add(bw);
+                }
+            }
             
             
         }
@@ -55,7 +66,7 @@ namespace Kiosky
 
         }
 
-        private void Browser_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void Browser_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             // If they hit pause, show the Configuration dialog
             if (e.Key == Key.Pause)
@@ -65,7 +76,8 @@ namespace Kiosky
             }
             else if (e.Key == Key.Escape)
             {
-                this.Close();
+                
+                    this.Close();
             }
         }
 
@@ -93,6 +105,21 @@ namespace Kiosky
             this.Visibility = Visibility.Visible;
         }
 
-        
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var cw = new Dialogs.CloseDialog();
+            cw.ShowDialog();
+            if (cw.ConfirmClose)
+            {
+                foreach (var bw in _blankWindows)
+                {
+                    bw.Close();
+                }
+            }
+            else
+            {
+                e.Cancel = true;
+            }
+        }
     }
 }

@@ -6,7 +6,7 @@
         xmlns:wpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
         xmlns:local="clr-namespace:Kiosky"
         mc:Ignorable="d"
-        Title="Kiosk" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" Visibility="Hidden">
+        Title="Kiosk" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" Visibility="Hidden" Closing="Window_Closing">
     <Grid>
         <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1">
             <wpf:ChromiumWebBrowser x:Name="Browser" Address="about:blank" ContextMenuOpening="Browser_ContextMenuOpening" PreviewKeyDown="Browser_PreviewKeyDown" Loaded="Browser_Loaded">
