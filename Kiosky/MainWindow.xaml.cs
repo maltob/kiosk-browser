@@ -38,29 +38,29 @@ namespace Kiosky
             InitializeComponent();
 
             LoadSettings();
-            
+
 
             //Show the browser
             this.Visibility = Visibility.Visible;
-           
+
             //Cover over non primary screens
-            foreach(Screen s in Screen.AllScreens)
+            foreach (Screen s in Screen.AllScreens)
             {
-                if(!s.Primary)
+                if (!s.Primary)
                 {
                     var bw = new Dialogs.BlankWindow(s);
-                  //  bw.Show();
+                    //  bw.Show();
                     _blankWindows.Add(bw);
                 }
             }
-            
-            
+
+
         }
 
         private void LoadSettings()
         {
 
-            
+
             //Confgure the browser
             _browserSettings = Settings.KioskSettings.GetSettings();
 
@@ -68,7 +68,7 @@ namespace Kiosky
 
             //Setup the lockdown
             ConfigureBrowserSettings(_browserSettings);
-            if(_lockdown != null)
+            if (_lockdown != null)
             {
                 _lockdown = null;
             }
@@ -78,13 +78,13 @@ namespace Kiosky
 
 
             //If there was an old timer, tear it down
-            if(_cycleURLTimer != null)
+            if (_cycleURLTimer != null)
             {
                 _cycleURLTimer.Stop();
                 _cycleURLTimer.IsEnabled = false;
                 _cycleURLTimer = null;
-                
-                
+
+
             }
 
             //Setup the timer if the cycle time isn't 0 and we have more than one URL
@@ -96,12 +96,43 @@ namespace Kiosky
                 _cycleURLTimer.IsEnabled = true;
                 _cycleURLTimer.Start();
             }
+
+            //Setup the top bar, if we show no buttons or url bar hide it
+            if(_browserSettings.ShowCloseButton || _browserSettings.ShowHelpButton || _browserSettings.ShowURLBar)
+            {
+
+                //Show the top bar
+                this.TopBar.Visibility = Visibility.Visible;
+
+
+                //See if we should show the buttons
+                if (_browserSettings.ShowCloseButton)
+                    this.CloseButton.Visibility = Visibility.Visible;
+                else
+                    this.CloseButton.Visibility = Visibility.Collapsed;
+
+                if (_browserSettings.ShowHelpButton)
+                    this.HelpButton.Visibility = Visibility.Visible;
+                else
+                    this.HelpButton.Visibility = Visibility.Collapsed;
+
+                //Show the URL bar?
+                if (_browserSettings.ShowURLBar)
+                    this.URLBar.Visibility = Visibility.Visible;
+                else
+                    this.URLBar.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                //Collapse the top bar so the browser takes up the full screen
+                this.TopBar.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void CycleURL_Tick(object sender, EventArgs e)
         {
             _urlIndex++;
-            if(_browserSettings.CycleURLs.Length == _urlIndex)
+            if (_browserSettings.CycleURLs.Length == _urlIndex)
             {
                 _urlIndex = 0;
             }
@@ -118,9 +149,11 @@ namespace Kiosky
         private void Browser_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             // If they hit pause, show the Configuration dialog
-            if (e.Key == Key.Pause) { 
+            if (e.Key == Key.Pause)
+            {
 
-                if (Settings.KioskSettings.GetConfigPath().Contains("://") == false) {
+                if (Settings.KioskSettings.GetConfigPath().Contains("://") == false)
+                {
                     Dialogs.Configuration configurationDialog = new Dialogs.Configuration();
                     configurationDialog.ShowDialog();
                     LoadSettings();
@@ -128,12 +161,12 @@ namespace Kiosky
             }
             else if (e.Key == Key.Escape)
             {
-                
-                    this.Close();
+
+                this.Close();
             }
         }
 
-      
+
         /// <summary>
         /// Sets the embedded browser up for use
         /// </summary>
@@ -147,12 +180,15 @@ namespace Kiosky
                 this.Browser.BrowserSettings.JavascriptDomPaste = CefSharp.CefState.Disabled;
                 this.Browser.BrowserSettings.Plugins = CefSharp.CefState.Disabled;
                 this.Browser.BrowserSettings.WebSecurity = CefSharp.CefState.Enabled;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
+                //This tends to happen after config has reloaded
                 Logger.DefaultLogger.LogWarning(String.Format("Failed to set browser settings. {0}", e.Message));
             }
 
-            if(browserSettings.CycleURLs.Length >= 1)
+            //Setup with the first URL first
+            if (browserSettings.CycleURLs.Length >= 1)
             {
                 this.Browser.Address = browserSettings.CycleURLs[0];
                 _urlIndex = 0;
@@ -164,21 +200,65 @@ namespace Kiosky
             this.Visibility = Visibility.Visible;
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+
+
+        private bool CloseBrowser()
         {
-            var cw = new Dialogs.CloseDialog();
-            cw.ShowDialog();
-            if (cw.ConfirmClose)
+            if (_browserSettings.PromptOnExit)
             {
-                foreach (var bw in _blankWindows)
+                var cw = new Dialogs.CloseDialog(_browserSettings);
+                cw.ShowDialog();
+                if (cw.ConfirmClose)
                 {
-                    bw.Close();
+                    //Close all the cover windows
+                    foreach (var bw in _blankWindows)
+                    {
+                        bw.Close();
+                    }
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
             else
             {
-                e.Cancel = true;
+
+                //Close all the cover windows
+                foreach (var bw in _blankWindows)
+                {
+                    bw.Close();
+                }
+                return true;
             }
+        }
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = !CloseBrowser();
+        }
+
+        private void HelpButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Do Nothing
+        }
+
+        private void UpdateAddressBar()
+        {
+            // The loading state is in a seperate thread, we need to use dispatcher to call back into the UI thread
+            this.URLBar.Dispatcher.BeginInvoke(new Action(() => URLBar.Text = Browser.Address));
+        }
+
+        private void Browser_LoadingStateChanged(object sender, CefSharp.LoadingStateChangedEventArgs e)
+        {
+
+            UpdateAddressBar();
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            // The close button doesn't care
+            _ = CloseBrowser();
         }
     }
 }

@@ -46,8 +46,10 @@ namespace Kiosky.Dialogs
                 EnableSettings(false);
             }
 
-
+            //handle settings that a binding doesn't work quite right for
             LoadSettings();
+
+            this.DataContext = _settings;
         }
 
         private void Window_LostFocus(object sender, RoutedEventArgs e)
@@ -105,7 +107,7 @@ namespace Kiosky.Dialogs
                             }
                         }
                     }
-
+                    //handle settings that a simple binding don't work quite right for
                     UpdateSettings();
                     //Save the settings back to file
                     Settings.YAMLSettings.ToFile(Settings.KioskSettings.GetConfigPath(), _settings);
@@ -132,14 +134,15 @@ namespace Kiosky.Dialogs
                 this.ProgramList.Text = String.Join("\n", _settings.BlockPrograms);
             }
 
-            //Alt tab blocking
-            this.DisableAltTabCheckbox.IsChecked = _settings.BlockWindowSwitching;
 
             //URLs to open 
             this.URLsToOpen.Text = String.Join("\n", _settings.CycleURLs);
 
             //Cycle time
             this.SecondsBetweenPages.Text = _settings.CycleTime.ToString();
+          
+
+          
         }
 
         private void UpdateSettings()
@@ -159,33 +162,42 @@ namespace Kiosky.Dialogs
                 _settings.BlockPrograms = this.ProgramList.Text.Split('\r', '\n', ',').Where(o => o.Length > 0).ToArray();
             }
 
-            //Should we block alt tab?
-            _settings.BlockWindowSwitching = (this.DisableAltTabCheckbox.IsChecked == true);
-
-
+       
             //Startup URLs
             _settings.CycleURLs = this.URLsToOpen.Text.Split('\r', '\n').Where(o => o.Length > 0).ToArray();
 
-            //Time betweem pages
+            //Time between pages
             int cT = 30;
             Int32.TryParse(this.SecondsBetweenPages.Text, out cT);
             _settings.CycleTime = cT;
+
+
+        }
+
+        private void CheckPassword()
+        {
+            if (Settings.PasswordManager.ComparePassword(AdminPasswordBox.Password, _settings))
+            {
+                EnableSettings(true);
+            }
+            else
+            {
+                EnableSettings(false);
+
+            }
         }
 
         private void AdminPasswordBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter || e.Key == Key.Return || e.Key == Key.Tab)
             {
-                if (Settings.PasswordManager.ComparePassword(AdminPasswordBox.Password, _settings))
-                {
-                    EnableSettings(true);
-                }
-                else
-                {
-                    EnableSettings(false);
-
-                }
+                CheckPassword();
             }
+        }
+
+        private void CheckButton_Click(object sender, RoutedEventArgs e)
+        {
+            CheckPassword();
         }
     }
 }

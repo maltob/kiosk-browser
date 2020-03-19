@@ -62,6 +62,44 @@ namespace Kiosky.Settings
         /// </summary>
         public string AdminPasswordHash { get; set; }
 
+        /// <summary>
+        /// Whether or not to require the Admin password to leave the browser
+        /// </summary>
+        public bool RequirePasswordToExit { get; set; }
+
+
+        /// <summary>
+        /// Should we prompt to confirm that we want to exit?
+        /// </summary>
+        public bool PromptOnExit { get; set; }
+
+
+        /// <summary>
+        /// Show the help button at the top of the screen
+        /// </summary>
+        public bool ShowHelpButton { get; set; }
+
+
+        /// <summary>
+        /// Show the URL in a bar at the top of the screen
+        /// </summary>
+        public bool ShowURLBar { get; set; }
+
+        /// <summary>
+        /// Show a close button at the top of the screen
+        /// </summary>
+        public bool ShowCloseButton { get; set; }
+
+        /// <summary>
+        /// What URL should the help button load?
+        /// </summary>
+        public string HelpPageURL { get; set; }
+
+        /// <summary>
+        /// Should there be a message on any secondary/tertiary screens?
+        /// </summary>
+        public string BlankPageComment { get; set; }
+
 
     }
 }

@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="BlankWindow" WindowStyle="None" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True" WindowStartupLocation="CenterScreen" WindowState="Maximized" IsVisibleChanged="Window_IsVisibleChanged">
     <Grid Background="Black">
-        
+        <Label x:Name="BlankMessage" Content="Blanked by Kiosk" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16" Margin="100,100,100,100" />
+
     </Grid>
 </Window>

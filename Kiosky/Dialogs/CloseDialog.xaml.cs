@@ -23,12 +23,36 @@ namespace Kiosky.Dialogs
         /// Whether or not the user confirmed closing, the main app checks this to see if it should close
         /// </summary>
         public bool ConfirmClose = false;
+        bool unlockedWithAdmin = false;
+        Settings.Settings _settings;
         /// <summary>
         /// 
         /// </summary>
-        public CloseDialog()
+        public CloseDialog(Settings.Settings s)
         {
             InitializeComponent();
+
+            _settings = s;
+            unlockedWithAdmin = !s.RequirePasswordToExit;
+
+
+            //Hide the admin password boxes
+            if(!s.RequirePasswordToExit)
+            {
+                
+                HideAdmin();
+            }
+
+            this.DataContext = this;
+        }
+
+        private void HideAdmin()
+        {
+            this.AdminPasswordBox.Visibility = Visibility.Collapsed;
+            this.AdminPasswordLabel.Visibility = Visibility.Collapsed;
+            this.CheckAdminButton.Visibility = Visibility.Collapsed;
+            NoButton.IsEnabled = true;
+            YesButton.IsEnabled = true;
         }
 
         private void Button_Click_Yes(object sender, RoutedEventArgs e)
@@ -41,6 +65,27 @@ namespace Kiosky.Dialogs
         {
             ConfirmClose = false;
             this.Close();
+        }
+
+        
+
+        private void AdminPasswordBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter || e.Key == Key.Return || e.Key == Key.Tab)
+                if (Settings.PasswordManager.ComparePassword(AdminPasswordBox.Password, _settings))
+                {
+                    unlockedWithAdmin = true;
+                    HideAdmin();
+                }
+        }
+
+        private void CheckAdminButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Settings.PasswordManager.ComparePassword(AdminPasswordBox.Password, _settings))
+            {
+                unlockedWithAdmin = true;
+                HideAdmin();
+            }
         }
     }
 }

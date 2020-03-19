@@ -6,11 +6,14 @@
         xmlns:local="clr-namespace:Kiosky.Dialogs"
         mc:Ignorable="d"
         Title="Exit" Height="450" Width="800" WindowStyle="ToolWindow" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen">
-    <Grid>
-        <Label Content="Are you sure you want to exit?" Height="40.206" Margin="0,53.866,0,0" VerticalAlignment="Top" FontFamily="Rockwell" FontSize="20" HorizontalAlignment="Center"/>
-        <Button Content="Yes" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Button_Click_Yes" Width="144.588" Margin="117.526,256.701,0,0" Height="47.795" Background="#FFB6B6B6" FontWeight="Bold"/>
-        <Button Content="No" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Button_Click_No"  Width="144.588" Margin="542.696,315.453,0,58.752" Height="47.795" Background="#FF8A9B79" FontWeight="Bold"/>
+    <Grid Background="#FFFFFBFD">
+        <Label Content="Are you sure you want to exit?" Height="40.206" Margin="213.417,52.866,293.829,0" VerticalAlignment="Top" FontFamily="Rockwell" FontSize="20" HorizontalAlignment="Center"/>
+        <Button x:Name="YesButton" Content="Yes" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Button_Click_Yes" Width="144.588" Margin="117.526,256.701,0,0" Height="47.795" Background="#FF61994C" FontWeight="Bold"/>
+        <Button x:Name="NoButton" Content="No" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Button_Click_No"  Width="144.588" Margin="542.696,315.453,0,58.752" Height="47.795" Background="#FFE0B3B3" FontWeight="Bold"/>
         <Label Content="Your work will not be saved!" Height="40.206" Margin="213.417,134.278,213.417,0" VerticalAlignment="Top" FontFamily="Rockwell" FontSize="20" HorizontalAlignment="Center" FontWeight="Bold" Width="367.166"/>
+        <PasswordBox x:Name="AdminPasswordBox" HorizontalAlignment="Left" Height="26.289" Margin="176.381,197.68,0,0" VerticalAlignment="Top" Width="439.176" KeyDown="AdminPasswordBox_KeyDown"/>
+        <Label x:Name="AdminPasswordLabel" Content="Admin Password" HorizontalAlignment="Left" Height="26.289" Margin="32.835,197.68,0,0" VerticalAlignment="Top" Width="138.546" FontSize="16" FontWeight="Bold"/>
+        <Button x:Name="CheckAdminButton" Content="Check" HorizontalAlignment="Left" Height="26.289" Margin="634.113,197.68,0,0" VerticalAlignment="Top" Width="53.171" Click="CheckAdminButton_Click"/>
 
     </Grid>
 </Window>

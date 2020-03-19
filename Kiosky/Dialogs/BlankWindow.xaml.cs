@@ -25,11 +25,13 @@ namespace Kiosky.Dialogs
         /// Creates a new blank window to cover a screen
         /// </summary>
         /// <param name="ScreenToCover">The screen that should be covered over</param>
-        public BlankWindow(Screen ScreenToCover)
+        /// <param name="Message">Message to show on the screen</param>
+        public BlankWindow(Screen ScreenToCover,string Message="")
         {
             InitializeComponent();
 
             _screenCovering = ScreenToCover;
+            this.BlankMessage.Content = Message;
 
 
 

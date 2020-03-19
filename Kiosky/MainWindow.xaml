@@ -6,15 +6,41 @@
         xmlns:wpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
         xmlns:local="clr-namespace:Kiosky"
         mc:Ignorable="d"
-        Title="Kiosk" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" Visibility="Hidden" Closing="Window_Closing">
-    <Grid>
-        <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1">
-            <wpf:ChromiumWebBrowser x:Name="Browser" Address="about:blank" ContextMenuOpening="Browser_ContextMenuOpening" PreviewKeyDown="Browser_PreviewKeyDown" Loaded="Browser_Loaded">
+        Title="Kiosk" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" Visibility="Visible" Closing="Window_Closing">
+    <DockPanel >
+        <Border x:Name="TopBar" DockPanel.Dock="Top" Background="#EEEEEE" >
+            <Grid Height="35" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Button x:Name="HelpButton" Grid.Row="0" Grid.Column="0" Width="40" Margin="10,0,20,0" Content="Help" Foreground="DarkBlue" FontWeight="Bold" Click="HelpButton_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="Help_128.png" Opacity="0.3"/>
+                    </Button.Background>
+                </Button>
+                <TextBox x:Name="URLBar" Grid.Row="0" Grid.Column="1" Margin="0,5" IsEnabled="False">https://test.com</TextBox>
+                <Button x:Name="CloseButton"  Grid.Row="0" Grid.Column="2" Width="40" Margin="20,0,10,0" Content="Close" Foreground="DarkRed" FontWeight="Bold" Click="CloseButton_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="Close_128.png" Opacity="0.3"/>
+                    </Button.Background>
+                </Button>
+                
+            </Grid>
+
+        </Border>
+        <Border BorderBrush="Gray" BorderThickness="0,1">
+            <wpf:ChromiumWebBrowser x:Name="Browser" Address="about:blank" ContextMenuOpening="Browser_ContextMenuOpening" PreviewKeyDown="Browser_PreviewKeyDown" Loaded="Browser_Loaded" LoadingStateChanged="Browser_LoadingStateChanged">
                 <wpf:ChromiumWebBrowser.ContextMenu>  
                     <ContextMenu/>
                 </wpf:ChromiumWebBrowser.ContextMenu>
             </wpf:ChromiumWebBrowser>
         </Border>
+        
 
-    </Grid>
+    </DockPanel>
 </Window>
