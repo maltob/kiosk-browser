@@ -34,13 +34,7 @@ namespace Kiosky
 
             InitializeComponent();
 
-            //Confgure the browser
-            _browserSettings = Settings.KioskSettings.GetSettings();
-            Browser.RequestHandler = new Handlers.KioskyRequestHandler(_browserSettings);
-            ConfigureBrowserSettings(_browserSettings);
-            _lockdown = new Lockdown.WindowsLockdown(DisableTaskManager: _browserSettings.BlockTaskManager, DisableAltTab: _browserSettings.BlockWindowSwitching);
-
-            
+            LoadSettings();
             
 
             //Show the browser
@@ -59,6 +53,26 @@ namespace Kiosky
             
             
         }
+
+        private void LoadSettings()
+        {
+
+            
+            //Confgure the browser
+            _browserSettings = Settings.KioskSettings.GetSettings();
+
+            Browser.RequestHandler = new Handlers.KioskyRequestHandler(_browserSettings);
+
+            ConfigureBrowserSettings(_browserSettings);
+            if(_lockdown != null)
+            {
+                _lockdown = null;
+            }
+            _lockdown = new Lockdown.WindowsLockdown(DisableTaskManager: _browserSettings.BlockTaskManager, DisableAltTab: _browserSettings.BlockWindowSwitching);
+
+
+        }
+
         private void Browser_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             e.Handled = false;
@@ -73,6 +87,7 @@ namespace Kiosky
             {
                 Dialogs.Configuration configurationDialog = new Dialogs.Configuration();
                 configurationDialog.ShowDialog();
+                LoadSettings();
             }
             else if (e.Key == Key.Escape)
             {

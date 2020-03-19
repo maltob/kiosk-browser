@@ -94,6 +94,7 @@
     <Compile Include="Lockdown\Support\KeyboardHook.cs" />
     <Compile Include="Logger\DefaultLogger.cs" />
     <Compile Include="Settings\KioskSettings.cs" />
+    <Compile Include="Settings\PasswordManager.cs" />
     <Compile Include="Settings\Settings.cs" />
     <Compile Include="Settings\TestingSettings.cs" />
     <Compile Include="Settings\YAMLSettings.cs" />
