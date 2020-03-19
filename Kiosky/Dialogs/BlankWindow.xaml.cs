@@ -21,7 +21,10 @@ namespace Kiosky.Dialogs
     public partial class BlankWindow : Window
     {
         Screen _screenCovering;
-
+        /// <summary>
+        /// Creates a new blank window to cover a screen
+        /// </summary>
+        /// <param name="ScreenToCover">The screen that should be covered over</param>
         public BlankWindow(Screen ScreenToCover)
         {
             InitializeComponent();

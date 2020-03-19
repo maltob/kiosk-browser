@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Configuration" Height="449" Width="500" Topmost="True" LostFocus="Window_LostFocus">
     <Grid Margin="0,0,0,1">
-        <PasswordBox x:Name="AdminPasswordBox" HorizontalAlignment="Left" Margin="125,18,0,0" VerticalAlignment="Top" Width="318" PasswordChanged="AdminPasswordBox_PasswordChanged"/>
+        <PasswordBox x:Name="AdminPasswordBox" HorizontalAlignment="Left" Margin="125,18,0,0" VerticalAlignment="Top" Width="318" KeyDown="AdminPasswordBox_KeyDown"/>
         <Label Content="Admin Password" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
 
 
@@ -20,26 +20,28 @@
                     </Grid.ColumnDefinitions>
                     <Label Content="URLs to open" HorizontalAlignment="Left" Height="34" Margin="10,50.05,0,0" VerticalAlignment="Top" Width="85" FontWeight="Bold" Grid.ColumnSpan="2"/>
                     <Label Content="Seconds Between URL" HorizontalAlignment="Left" Height="24.05" Margin="34.673,10,0,0" VerticalAlignment="Top" Width="140.277" Grid.ColumnSpan="2"/>
-                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="24.05" Margin="128.723,10,0,0" TextWrapping="Wrap" Text="60" VerticalAlignment="Top" Width="79"/>
+                    <TextBox x:Name="SecondsBetweenPages" Grid.Column="1" HorizontalAlignment="Left" Height="24.05" Margin="128.723,10,0,0" TextWrapping="Wrap" Text="60" VerticalAlignment="Top" Width="79"/>
+                    <TextBox x:Name="URLsToOpen" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="120" Margin="69.673,102.04,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="333" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
 
                 </Grid>
             </TabItem>
             <TabItem Header="Domains">
                 <Grid Background="#FFE5E5E5">
                     <Label Content="Allowed Domains" HorizontalAlignment="Left" Height="34" Margin="10,10,0,0" VerticalAlignment="Top" Width="127" FontWeight="Bold"/>
+                    <TextBox x:Name="AllowedDomains" HorizontalAlignment="Left" Height="160" Margin="55.673,57.04,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="307" VerticalScrollBarVisibility="Auto" AcceptsReturn="True"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Lockdown" HorizontalAlignment="Right" Height="19.96" VerticalAlignment="Top" Width="53.973" Margin="-2,-2,2,0">
                 <Grid Background="#FFE5E5E5">
-                    <CheckBox Content="Disable Window Switching (Alt+Tab)" HorizontalAlignment="Left" Margin="122.277,10,0,0" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="DisableAltTabCheckbox" Content="Disable Window Switching (Alt+Tab)" HorizontalAlignment="Left" Margin="122.277,10,0,0" VerticalAlignment="Top"/>
                     <Label Content="Program List" HorizontalAlignment="Left" Height="27" Margin="10,48.04,0,0" VerticalAlignment="Top" Width="117.673"/>
-                    <RadioButton Content="Block" HorizontalAlignment="Left" Height="18" Margin="139.673,57.04,0,0" VerticalAlignment="Top" Width="100" GroupName="ProgramListType" IsChecked="True"/>
-                    <RadioButton Content="Allow" HorizontalAlignment="Left" Height="18" Margin="257.673,57.04,0,0" VerticalAlignment="Top" Width="100" GroupName="ProgramListType"/>
+                    <RadioButton x:Name="BlockRadioButton" Content="Block" HorizontalAlignment="Left" Height="18" Margin="139.673,57.04,0,0" VerticalAlignment="Top" Width="100" GroupName="ProgramListType" IsChecked="True"/>
+                    <RadioButton x:Name="AllowRadioButton" Content="Allow" HorizontalAlignment="Left" Height="18" Margin="257.673,57.04,0,0" VerticalAlignment="Top" Width="100" GroupName="ProgramListType"/>
+                    <TextBox x:Name="ProgramList" HorizontalAlignment="Left" Height="149" Margin="34.673,89.04,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="403" VerticalScrollBarVisibility="Auto" AcceptsReturn="True"/>
                 </Grid>
             </TabItem>
         </TabControl>
-        <Button Content="Cancel" HorizontalAlignment="Left" Height="33" Margin="386,359,0,0" VerticalAlignment="Top" Width="96" Background="#FFFFAFAF"/>
-        <Button Content="Save" HorizontalAlignment="Left" Height="33" Margin="10,359,0,0" VerticalAlignment="Top" Width="96"/>
-        <TextBox HorizontalAlignment="Left" Height="144" Margin="56,147.05,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="387"/>
+        <Button Content="Cancel" HorizontalAlignment="Left" Height="33" Margin="386,359,0,0" VerticalAlignment="Top" Width="96" Background="#FFFFAFAF" Click="CancelButton_Click"/>
+        <Button Content="Save" HorizontalAlignment="Left" Height="33" Margin="10,359,0,0" VerticalAlignment="Top" Width="96" Click="SaveButton_Click"/>
     </Grid>
 </Window>

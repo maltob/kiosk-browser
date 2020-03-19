@@ -27,7 +27,10 @@ namespace Kiosky.Settings
             }
             else
             {
-                if(settings.AdminPasswordHash.Length > 0 && settings.AdminPasswordHash.Split('$').Count() == 6) {
+                if(settings.AdminPasswordHash.Length == 0 && UserPassword.Length == 0)
+                {
+                    return true;
+                }else  if(UserPassword.Length > 0 && settings.AdminPasswordHash.Length > 0 && settings.AdminPasswordHash.Split('$').Count() == 6) {
 
                     string[] hashSegments = settings.AdminPasswordHash.Split('$');
 
@@ -88,7 +91,7 @@ namespace Kiosky.Settings
         /// <param name="Iterations">Defaults to 8</param>
         /// <param name="MemorySize">KiB of memory to use, defaults to 262144 (256MiB)</param>
         /// <returns></returns>
-        public static string GeneratePasswordHash(string UserPassword, byte[] Salt, int DegreeOfParalellism = 4, int Iterations = 8, int MemorySize = (1024*256))
+        public static string GeneratePasswordHash(string UserPassword, byte[] Salt, int DegreeOfParalellism = 4, int Iterations = 4, int MemorySize = (1024*64))
         {
             Argon2id argon2 = new Argon2id(UTF8Encoding.UTF8.GetBytes(UserPassword));
 
@@ -125,7 +128,7 @@ namespace Kiosky.Settings
         {
             foreach (var p in parameters)
             {
-                if (p.StartsWith(prefix) && p.Length > 3)
+                if (p.StartsWith(prefix) && p.Length >= 3)
                 {
                     int t = 0;
 

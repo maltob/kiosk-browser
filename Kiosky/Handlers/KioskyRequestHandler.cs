@@ -17,9 +17,14 @@ namespace Kiosky.Handlers
         Boolean _showDialogWhenBlocked;
         public KioskyRequestHandler (Settings.Settings settings)
         {
-            _allowedHosts = new List<string>(settings.AllowedDomains);
-            _allowSubframeNavigation = settings.AllowAllSubframeDomains;
-            _showDialogWhenBlocked = settings.PopupWhenDomainBlocked;
+            if (settings.AllowedDomains == null)
+                _allowedHosts = new List<string>();
+            else
+                _allowedHosts = new List<string>(settings.AllowedDomains);
+
+
+            _allowSubframeNavigation = (!(settings.AllowAllSubframeDomains==false));
+            _showDialogWhenBlocked = settings.PopupWhenDomainBlocked==true;
 
         }
         protected override bool GetAuthCredentials(IWebBrowser chromiumWebBrowser, IBrowser browser, string originUrl, bool isProxy, string host, int port, string realm, string scheme, IAuthCallback callback)
@@ -47,7 +52,7 @@ namespace Kiosky.Handlers
             Uri uri = new Uri(request.Url);
 
             // If the allowed hosts list isn't empty, or if the host is an allowed host or if we allow all SubFrame navigation and this is a subframe navigation allow us to browse
-            if(_allowedHosts.Count > 0 && ((uri != null && _allowedHosts.Contains(uri.Host)) || ((!_allowSubframeNavigation) && request.TransitionType.HasFlag(TransitionType.AutoSubFrame)))) {
+            if(_allowedHosts.Count == 0 || ((uri != null && _allowedHosts.Contains(uri.Host)) || ((!_allowSubframeNavigation) && request.TransitionType.HasFlag(TransitionType.AutoSubFrame)))) {
                 
 
                 return false;

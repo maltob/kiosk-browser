@@ -9,13 +9,13 @@ namespace Kiosky.Lockdown
 {
     class AllowApplicationManager : IApplicationManager
     {
-        SortedSet<string> _allowedPrograms;
+        SortedSet<string> _allowedPrograms = new SortedSet<string>();
         string[] alwaysAllowedPrograms = new string[] { "WindowsInternal.ComposableShell.Experiences.TextInput.InputApp" };
         public void LoadPrograms(string[] programs)
         {
             //TODO: Handle loading a second time?
             foreach(string p in programs)
-                _allowedPrograms.Add(p);
+               _allowedPrograms.Add(p);
 
             foreach (string p in alwaysAllowedPrograms)
                 _allowedPrograms.Add(p);
@@ -41,7 +41,7 @@ namespace Kiosky.Lockdown
                         {
                             p.Kill();
                         }
-                        catch (Exception e)
+                        catch 
                         {
                             Logger.DefaultLogger.LogWarning(String.Format("Failed to kill {0}", p.MainModule.ModuleName));
                         }

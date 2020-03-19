@@ -21,7 +21,7 @@ namespace Kiosky.Settings
         public static Settings GetDefaultLockdownSettings(bool AllowSubframe = false)
         {
             Settings s = new Settings();
-            s.StartURL = "github.com";
+            s.CycleURLs = new string[] { "github.com" };
             s.Title = defaultTitle;
             s.PopupWhenDomainBlocked = true;
             s.AllowedDomains = new string[] { "github.com" };

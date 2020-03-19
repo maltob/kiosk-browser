@@ -7,21 +7,20 @@ using CommandLine;
 
 namespace Kiosky.Settings
 {
+    /// <summary>
+    /// Default handler to load in the settings for the Kiosk app
+    /// </summary>
     public class KioskSettings
     {
+        /// <summary>
+        /// Load in the Kiosk app settings, taking into account any command line parameters
+        /// </summary>
+        /// <returns></returns>
         public static Settings GetSettings()
         {
             Settings settings = TestingSettings.GetDefaultLockdownSettings();
-            string settingsFileName = "settings.yaml";
-            Parser.Default.ParseArguments<KioskOptions>(Environment.GetCommandLineArgs()).WithParsed<KioskOptions>(
-                ko =>
-                {
-                    if (ko.SettingsFile != null)
-                    {
-                        settingsFileName = ko.SettingsFile;
-                    }
-                }
-                );
+
+            var settingsFileName = GetConfigPath();
 
             //Load in the settings file from disk or URL
             if (System.IO.File.Exists(settingsFileName))
@@ -34,18 +33,43 @@ namespace Kiosky.Settings
 
             }
 
+            if(settings == null)
+            {
+                settings = TestingSettings.GetDefaultLockdownSettings();
+            }
+
             // Allow overriding the start URL
             Parser.Default.ParseArguments<KioskOptions>(Environment.GetCommandLineArgs()).WithParsed<KioskOptions>(
             ko =>
             {
                 if (ko.StartURL != null)
                 {
-                    settings.StartURL = ko.StartURL;
+                    settings.CycleURLs[0] = ko.StartURL;
                 }
             }
             );
 
             return settings;
+        }
+
+        /// <summary>
+        /// Read in command line arguments to find the configuration path
+        /// </summary>
+        /// <returns>Path to the configuration file</returns>
+        public static string GetConfigPath()
+        {
+            string settingsFileName = "settings.yaml";
+            Parser.Default.ParseArguments<KioskOptions>(Environment.GetCommandLineArgs()).WithParsed<KioskOptions>(
+                ko =>
+                {
+                    if (ko.SettingsFile != null)
+                    {
+                        settingsFileName = ko.SettingsFile;
+                    }
+                }
+                );
+
+            return settingsFileName;
         }
     }
     class KioskOptions

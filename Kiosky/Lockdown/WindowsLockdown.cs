@@ -22,8 +22,10 @@ namespace Kiosky.Lockdown
 
             if(DisableTaskManager)
             {
-                gpos = new Support.GPOSettings();
-                gpos.DisableTaskMgr = true;
+                gpos = new Support.GPOSettings
+                {
+                    DisableTaskMgr = true
+                };
             }
             
         }

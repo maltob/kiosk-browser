@@ -49,5 +49,14 @@ namespace Kiosky.Settings
             }
          
         }
+
+        public static bool ToFile(string path, Settings settings)
+        {
+            var serializer = new SerializerBuilder().Build();
+            string settingsYAML = serializer.Serialize(settings);
+            System.IO.File.WriteAllText(path, settingsYAML);
+            return System.IO.File.Exists(path);
+           
+        }
     }
 }

@@ -16,11 +16,7 @@ namespace Kiosky.Settings
         /// Application title
         /// </summary>
         public string Title { get; set; }
-        /// <summary>
-        /// The URL to launch the browser to first.
-        /// If using CycleURLs leave this empty
-        /// </summary>
-        public string StartURL { get; set; }
+
         /// <summary>
         /// An array of URLs to have the browser cycle through
         /// </summary>

@@ -19,7 +19,13 @@ namespace Kiosky.Dialogs
     /// </summary>
     public partial class CloseDialog : Window
     {
+        /// <summary>
+        /// Whether or not the user confirmed closing, the main app checks this to see if it should close
+        /// </summary>
         public bool ConfirmClose = false;
+        /// <summary>
+        /// 
+        /// </summary>
         public CloseDialog()
         {
             InitializeComponent();
