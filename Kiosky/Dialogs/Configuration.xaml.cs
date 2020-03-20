@@ -140,8 +140,9 @@ namespace Kiosky.Dialogs
 
             //Cycle time
             this.SecondsBetweenPages.Text = _settings.CycleTime.ToString();
-          
 
+            //Seconds before hiding a cursor
+            this.CursorAutoHide.Text = _settings.IdleCursorHideTime.ToString(); ;
           
         }
 
@@ -171,6 +172,10 @@ namespace Kiosky.Dialogs
             Int32.TryParse(this.SecondsBetweenPages.Text, out cT);
             _settings.CycleTime = cT;
 
+            //time to hide the cursor automatically
+            int aH = 0;
+            Int32.TryParse(this.CursorAutoHide.Text, out aH);
+            _settings.IdleCursorHideTime = aH;
 
         }
 

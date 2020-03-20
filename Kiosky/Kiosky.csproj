@@ -89,6 +89,9 @@
     <Compile Include="Dialogs\CloseDialog.xaml.cs">
       <DependentUpon>CloseDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\HelpDialog.xaml.cs">
+      <DependentUpon>HelpDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Lockdown\DenyApplicationManager.cs" />
     <Compile Include="Lockdown\Support\GPOSettings.cs" />
     <Compile Include="Lockdown\Support\KeyboardHook.cs" />
@@ -107,6 +110,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\Configuration.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\HelpDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -25,6 +25,8 @@ namespace Kiosky
         Settings.Settings _browserSettings;
         Lockdown.WindowsLockdown _lockdown;
         DispatcherTimer _cycleURLTimer;
+        DispatcherTimer _hideMouseTimer;
+        DateTime _lastMouseMove;
         int _urlIndex = 0;
         List<Dialogs.BlankWindow> _blankWindows = new List<Dialogs.BlankWindow>();
         /// <summary>
@@ -33,7 +35,7 @@ namespace Kiosky
         public MainWindow()
         {
 
-
+            _lastMouseMove = DateTime.Now;
 
             InitializeComponent();
 
@@ -43,18 +45,32 @@ namespace Kiosky
             //Show the browser
             this.Visibility = Visibility.Visible;
 
-            //Cover over non primary screens
+            //Cover over the other screens
             foreach (Screen s in Screen.AllScreens)
             {
-                if (!s.Primary)
+                if(!(this.Left >= s.Bounds.Left && this.Top >= s.Bounds.Top && this.Top+this.Height <= s.Bounds.Top+s.Bounds.Height))
                 {
-                    var bw = new Dialogs.BlankWindow(s);
-                    //  bw.Show();
+                    var bw = new Dialogs.BlankWindow(s, _browserSettings.BlankPageComment);
+                    bw.Show();
                     _blankWindows.Add(bw);
                 }
+                
             }
 
+            //Hides the cursor when idle
+            _hideMouseTimer = new DispatcherTimer();
+            _hideMouseTimer.Interval = TimeSpan.FromSeconds(60);
+            _hideMouseTimer.Tick += _hideMouseTimer_Tick;
+            _hideMouseTimer.IsEnabled = true;
+            _hideMouseTimer.Start();
 
+        }
+
+        private void _hideMouseTimer_Tick(object sender, EventArgs e)
+        {
+            // Hide the cursor when it is idle
+            if (_browserSettings.IdleCursorHideTime > 0 && DateTime.Now.Subtract(_lastMouseMove).TotalMinutes > _browserSettings.IdleCursorHideTime)
+                Mouse.OverrideCursor = System.Windows.Input.Cursors.None;
         }
 
         private void LoadSettings()
@@ -163,6 +179,10 @@ namespace Kiosky
             {
 
                 this.Close();
+            }else if(e.Key == Key.F1)
+            {
+                var HelpDialog = new Dialogs.HelpDialog(_browserSettings);
+                HelpDialog.ShowDialog();
             }
         }
 
@@ -202,8 +222,10 @@ namespace Kiosky
 
 
 
-        private bool CloseBrowser()
+       
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+
             if (_browserSettings.PromptOnExit)
             {
                 var cw = new Dialogs.CloseDialog(_browserSettings);
@@ -215,11 +237,11 @@ namespace Kiosky
                     {
                         bw.Close();
                     }
-                    return true;
+                   
                 }
                 else
                 {
-                    return false;
+                    e.Cancel = true;
                 }
             }
             else
@@ -230,17 +252,15 @@ namespace Kiosky
                 {
                     bw.Close();
                 }
-                return true;
+                
             }
-        }
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            e.Cancel = !CloseBrowser();
+            
         }
 
         private void HelpButton_Click(object sender, RoutedEventArgs e)
         {
-            //Do Nothing
+            var HelpDialog = new Dialogs.HelpDialog(_browserSettings);
+            HelpDialog.ShowDialog();
         }
 
         private void UpdateAddressBar()
@@ -258,7 +278,13 @@ namespace Kiosky
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             // The close button doesn't care
-            _ = CloseBrowser();
+            this.Close();
+        }
+
+        private void Window_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            _lastMouseMove = DateTime.Now;
+            Mouse.OverrideCursor = System.Windows.Input.Cursors.Arrow;
         }
     }
 }

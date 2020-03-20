@@ -100,6 +100,11 @@ namespace Kiosky.Settings
         /// </summary>
         public string BlankPageComment { get; set; }
 
+        /// <summary>
+        /// How many minutes before hiding the cursor, 0 to disable hiding
+        /// </summary>
+        public int IdleCursorHideTime { get; set; }
 
+    
     }
 }

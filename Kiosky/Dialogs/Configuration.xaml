@@ -64,8 +64,11 @@
 
                     </GroupBox>
                     <CheckBox x:Name="PromptOnExit" Content="Confirm exit" HorizontalAlignment="Left" Height="21" Margin="291.673,10,0,0" VerticalAlignment="Top" Width="242" FontWeight="Bold" IsChecked="{Binding PromptOnExit}"/>
-                    <TextBox x:Name="HelpURL" HorizontalAlignment="Left" Height="23" Margin="67,68.04,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="478.673" Text="{Binding HelpURL}"/>
+                    <TextBox x:Name="HelpURL" HorizontalAlignment="Left" Height="23" Margin="102.327,68.04,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="458.346" Text="{Binding HelpURL}"/>
                     <Label Content="Help URL:" HorizontalAlignment="Left" Height="30" Margin="0,66.04,0,0" VerticalAlignment="Top" Width="67" FontWeight="Bold"/>
+                    <TextBox x:Name="CursorAutoHide" HorizontalAlignment="Left" Height="19" Margin="102.327,42.04,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="36.673" ToolTip="Minutes the mouse needs to be not moving before hiding"/>
+                    <Label Content="Cursor Hide:" HorizontalAlignment="Left" Height="23" Margin="0,42.04,0,0" VerticalAlignment="Top" Width="87.327" FontWeight="Bold"/>
+
                 </Grid>
             </TabItem>
         </TabControl>

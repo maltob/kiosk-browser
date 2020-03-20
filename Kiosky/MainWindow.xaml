@@ -6,7 +6,7 @@
         xmlns:wpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
         xmlns:local="clr-namespace:Kiosky"
         mc:Ignorable="d"
-        Title="Kiosk" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" Visibility="Visible" Closing="Window_Closing">
+        Title="Kiosk" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" Visibility="Visible" Closing="Window_Closing" MouseMove="Window_MouseMove">
     <DockPanel >
         <Border x:Name="TopBar" DockPanel.Dock="Top" Background="#EEEEEE" >
             <Grid Height="35" >

@@ -43,7 +43,7 @@ namespace Kiosky.Dialogs
                 HideAdmin();
             }
 
-            this.DataContext = this;
+          
         }
 
         private void HideAdmin()
