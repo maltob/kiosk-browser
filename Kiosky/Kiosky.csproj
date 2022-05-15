@@ -173,7 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CefSharp.Wpf">
-      <Version>86.0.241</Version>
+      <Version>98.1.210</Version>
     </PackageReference>
     <PackageReference Include="CommandLineParser">
       <Version>2.7.82</Version>
